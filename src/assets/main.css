@@ -1,12 +1,4 @@
-@import './base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
-}
+@import "./base.css";
 
 a,
 .green {
@@ -15,6 +7,79 @@ a,
   transition: 0.4s;
 }
 
+.stopwatch {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1;
+  width: 100%;
+  gap: 45px 50px;
+
+  padding: 72px 0;
+}
+
+.stopwatch-card {
+  background-color: #696969;
+  height: 120px;
+  transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.stopwatch-card__top {
+  padding: 20px;
+  height: 50%;
+  border-bottom: 1px solid #9e9e9e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 21px;
+  text-align: center;
+
+  color: #9e9e9e;
+}
+.stopwatch-card__bottom {
+  padding:20px;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.stopwatch-add {
+  background-color: #696969;
+  cursor: pointer;
+  position: relative;
+  transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  height: 120px;
+}
+.stopwatch-add::after {
+ content: '';
+ position: absolute;
+ top: 43%;
+ left: 50%;
+ width: 3px;
+ height: 20px;
+ background-color: #9E9E9E;
+}
+.stopwatch-add::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 47%;
+  width: 21px;
+  height: 3px;
+  background-color: #9E9E9E;
+ }
+ .stopwatch-add:hover {
+  background-color: #9E9E9E;
+ }
+ .stopwatch-add:hover.stopwatch-add::after,
+ .stopwatch-add:hover.stopwatch-add::before {
+  background-color: #696969;
+ }
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
@@ -22,14 +87,4 @@ a,
 }
 
 @media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
 }
