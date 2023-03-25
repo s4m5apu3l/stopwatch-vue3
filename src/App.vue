@@ -1,47 +1,71 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, watch, onUnmounted, reactive } from "vue";
+
+const stopwatches = reactive([
+  {
+    startTime: null,
+    elapsedTime: 0,
+    timer: null,
+    isRunning: false,
+  },
+]);
+
+const startStopwatch = (index) => {
+  const stopwatch = stopwatches[index];
+  stopwatch.startTime = Date.now() - stopwatch.elapsedTime;
+  stopwatch.timer = setInterval(() => {
+    stopwatch.elapsedTime = Date.now() - stopwatch.startTime;
+  }, 1000);
+  stopwatch.isRunning = true;
+};
+
+const stopStopwatch = (index) => {
+  const stopwatch = stopwatches[index];
+  clearInterval(stopwatch.timer);
+  stopwatch.isRunning = false;
+};
+
+const resetStopwatch = (index) => {
+  const stopwatch = stopwatches[index];
+  clearInterval(stopwatch.timer);
+  stopwatch.elapsedTime = 0;
+  stopwatch.isRunning = false;
+};
+
+const formatTime = (time) => {
+  const seconds = Math.floor(time / 1000);
+
+  if (seconds < 60) {
+    return `${seconds.toString().padStart(1, '0')}`;
+  } else {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+};
+
+const addStopwatch = () => {
+  stopwatches.push({
+    startTime: null,
+    elapsedTime: 0,
+    timer: null,
+    isRunning: false,
+  });
+};
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div>
+    <div v-for="(stopwatch, index) in stopwatches" :key="index">
+      <p>Elapsed time: {{ formatTime(stopwatch.elapsedTime) }}</p>
+      <button @click="startStopwatch(index)" v-if="!stopwatch.isRunning">
+        Start
+      </button>
+      <button @click="stopStopwatch(index)" v-else>Stop</button>
+      <button @click="resetStopwatch(index)">Reset</button>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <button @click="addStopwatch">+</button>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
