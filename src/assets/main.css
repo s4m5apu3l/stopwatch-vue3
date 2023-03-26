@@ -10,7 +10,6 @@ a,
 .stopwatch {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1;
   width: 100%;
   gap: 45px 50px;
 
@@ -21,6 +20,7 @@ a,
   background-color: #696969;
   height: 120px;
   transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  min-width: 225px;
 }
 
 .stopwatch-card__top {
@@ -53,12 +53,15 @@ a,
   position: relative;
   transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
   height: 120px;
+  min-width: 225px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .stopwatch-add::after {
  content: '';
  position: absolute;
- top: 43%;
- left: 50%;
  width: 3px;
  height: 20px;
  background-color: #9E9E9E;
@@ -66,8 +69,6 @@ a,
 .stopwatch-add::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 47%;
   width: 21px;
   height: 3px;
   background-color: #9E9E9E;
@@ -86,5 +87,19 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
+
+@media screen and (max-width: 980px) {
+  .stopwatch {
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .l-wrapper {
+    padding: 0 46px;
+  }
+  .stopwatch {
+    grid-template-columns: 1fr;
+  }
 }
